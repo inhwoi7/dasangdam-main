@@ -1,120 +1,46 @@
 // app/page.tsx
+
 import Link from "next/link";
-import type { Metadata } from "next";
-import type { ReactNode } from "react";
 import { getPosts } from "@/lib/posts";
+import { isExternalUrl } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "다상담 | 써니와 함께하는 인생의 지혜로운 쉼터",
-  description:
-    "사주, MBTI, 로또, 주역점, 블로그, 1:1 상담 예약까지 한눈에 보는 다상담 메인 페이지",
-};
+export const revalidate = 300;
 
-const CONSULT_CHANNELS = [
-  {
-    key: "kakao",
-    label: "상담 오픈 준비중 (카카오)",
-    href: "#",
-    tone: "dark",
-  },
-  {
-    key: "naver",
-    label: "상담 오픈 준비중 (네이버)",
-    href: "#",
-    tone: "light",
-  },
-];
+type PostItem = Awaited<ReturnType<typeof getPosts>>[number];
 
-const FEATURED_CONSULTS = [
-  {
-    id: "today-recommend",
-    badge: "TODAY'S PICK",
-    title: "마음을 깨우는 문장",
-    description: "위대한 사상가들이 건네는 오늘의 위로를 만나보세요.",
-    href: "/consult/recommended",
-    cta: "자세히 보기",
-  },
-];
+function formatDate(dateString?: string | null) {
+  if (!dateString) return "";
+  const date = new Date(dateString);
+  if (Number.isNaN(date.getTime())) return dateString;
 
-const SERVICES = [
-  {
-    key: "saju",
-    name: "사주",
-    description: "타고난 흐름과 현재의 운을 편안하게 살펴보세요.",
-    href: "https://my-saju-app.vercel.app",
-    iconBg: "#FFF2CC",
-    iconStroke: "#D89B00",
-  },
-  {
-    key: "mbti",
-    name: "MBTI 매칭",
-    description: "성향과 관계 패턴을 쉽고 명확하게 이해해보세요.",
-    href: "https://dasangdam-mbti-sunny.vercel.app",
-    iconBg: "#EAF4FF",
-    iconStroke: "#3C82F6",
-  },
-  {
-    key: "chemi",
-    name: "사주 궁합",
-    description: "우리 둘의 성향 차이와 조화를 확인해보세요.",
-    href: "https://dasangdam-chemi-app.vercel.app",
-    iconBg: "#FFF0F3",
-    iconStroke: "#E11D48",
-  },
-  {
-    key: "ipip",
-    name: "IPIP-50 성격검사",
-    description: "과학적인 5대 성격 요인을 정밀하게 측정합니다.",
-    href: "https://ipip50-rho.vercel.app/",
-    iconBg: "#EAFBF0",
-    iconStroke: "#16A34A",
-  },
-  {
-    key: "number",
-    name: "행운의 숫자",
-    description: "가벼운 마음으로 행운의 숫자를 확인해보세요.",
-    href: "/services/lucky-number",
-    iconBg: "#FFF0F3",
-    iconStroke: "#E11D48",
-  },
-  {
-    key: "today-fortune",
-    name: "오늘의 운세",
-    description: "오늘 하루의 기운을 가볍고 편안하게 확인해보세요.",
-    href: "/services/today-fortune",
-    iconBg: "#FFF7E8",
-    iconStroke: "#EA580C",
-  },
-];
+  return new Intl.DateTimeFormat("ko-KR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(date);
+}
 
-const BRAND = {
-  title: "다상담",
-  subtitle: "써니와 함께하는 인생의 지혜로운 쉼터",
-};
-
-function isExternalHref(href: string) {
-  return /^https?:\/\//i.test(href);
+function getPostHref(post: PostItem) {
+  if (post?.href && /^https?:\/\//i.test(post.href)) return post.href;
+  return `/library/${post.slug}`;
 }
 
 function SmartLink({
   href,
   className,
-  ariaLabel,
   children,
 }: {
   href: string;
   className?: string;
-  ariaLabel?: string;
-  children: ReactNode;
+  children: React.ReactNode;
 }) {
-  if (isExternalHref(href)) {
+  if (isExternalUrl(href)) {
     return (
       <a
         href={href}
+        className={className}
         target="_blank"
         rel="noreferrer"
-        className={className}
-        aria-label={ariaLabel}
       >
         {children}
       </a>
@@ -122,346 +48,148 @@ function SmartLink({
   }
 
   return (
-    <Link href={href} className={className} aria-label={ariaLabel}>
+    <Link href={href} className={className}>
       {children}
     </Link>
   );
 }
 
-function SunLogo() {
+function PostCard({ post }: { post: PostItem }) {
+  const href = getPostHref(post);
+
   return (
-    <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
-      <circle cx="32" cy="32" r="12" fill="#FDBA2D" />
-      <path
-        d="M32 6V14M32 50V58M6 32H14M50 32H58M13.5 13.5L19.2 19.2M44.8 44.8L50.5 50.5M50.5 13.5L44.8 19.2M19.2 44.8L13.5 50.5"
-        stroke="#F6A500"
-        strokeWidth="4"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
+    <article className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+      <div className="mb-3 flex items-center gap-2 text-sm text-neutral-500">
+        {post.category ? (
+          <span className="rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-700">
+            {post.category}
+          </span>
+        ) : null}
+        {post.date ? <span>{formatDate(post.date)}</span> : null}
+      </div>
 
-function ArrowRightIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M5 12H19M19 12L13 6M19 12L13 18"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
+      <h3 className="mb-3 text-xl font-bold tracking-tight text-neutral-900">
+        <SmartLink href={href} className="hover:text-neutral-600">
+          {post.title}
+        </SmartLink>
+      </h3>
 
-function ServiceIcon({
-  type,
-  stroke = "#222",
-}: {
-  type: string;
-  stroke?: string;
-}) {
-  switch (type) {
-    case "saju":
-      return (
-        <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
-          <circle cx="24" cy="24" r="13" stroke={stroke} strokeWidth="2.5" />
-          <path
-            d="M17 24C17 20.1 20.1 17 24 17"
-            stroke={stroke}
-            strokeWidth="2.5"
-            strokeLinecap="round"
-          />
-          <path
-            d="M31 24C31 27.9 27.9 31 24 31"
-            stroke={stroke}
-            strokeWidth="2.5"
-            strokeLinecap="round"
-          />
-          <circle cx="24" cy="24" r="3" fill={stroke} />
-        </svg>
-      );
-    case "mbti":
-      return (
-        <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
-          <rect
-            x="10"
-            y="10"
-            width="12"
-            height="12"
-            rx="3"
-            stroke={stroke}
-            strokeWidth="2.5"
-          />
-          <rect
-            x="26"
-            y="10"
-            width="12"
-            height="12"
-            rx="3"
-            stroke={stroke}
-            strokeWidth="2.5"
-          />
-          <rect
-            x="10"
-            y="26"
-            width="12"
-            height="12"
-            rx="3"
-            stroke={stroke}
-            strokeWidth="2.5"
-          />
-          <path
-            d="M30 26H34C36.2 26 38 27.8 38 30V34C38 36.2 36.2 38 34 38H30C27.8 38 26 36.2 26 34V30C26 27.8 27.8 26 30 26Z"
-            stroke={stroke}
-            strokeWidth="2.5"
-          />
-        </svg>
-      );
-    case "today-fortune":
-      return (
-        <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
-          <circle cx="24" cy="24" r="8" stroke={stroke} strokeWidth="2.5" />
-          <path
-            d="M24 8V13M24 35V40M8 24H13M35 24H40M13.5 13.5L17 17M31 31L34.5 34.5M34.5 13.5L31 17M17 31L13.5 34.5"
-            stroke={stroke}
-            strokeWidth="2.3"
-            strokeLinecap="round"
-          />
-        </svg>
-      );
-    case "chemi":
-      return (
-        <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
-          <path
-            d="M17.5 14C14 14 11 16.8 11 20.6C11 28 24 35 24 35S37 28 37 20.6C37 16.8 34 14 30.5 14C27.9 14 25.8 15.4 24 17.6C22.2 15.4 20.1 14 17.5 14Z"
-            stroke={stroke}
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      );
-    case "ipip":
-      return (
-        <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
-          <rect
-            x="10"
-            y="8"
-            width="28"
-            height="32"
-            rx="4"
-            stroke={stroke}
-            strokeWidth="2.5"
-          />
-          <path
-            d="M17 18H31M17 24H31M17 30H25"
-            stroke={stroke}
-            strokeWidth="2.5"
-            strokeLinecap="round"
-          />
-        </svg>
-      );
-    case "number":
-      return (
-        <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
-          <circle cx="24" cy="24" r="14" stroke={stroke} strokeWidth="2.5" />
-          <path
-            d="M20 18L24 14L28 18M24 14V34"
-            stroke={stroke}
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      );
-    default:
-      return (
-        <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
-          <circle cx="24" cy="24" r="12" stroke={stroke} strokeWidth="2.5" />
-        </svg>
-      );
-  }
-}
+      {post.excerpt ? (
+        <p className="mb-5 line-clamp-3 text-sm leading-6 text-neutral-600">
+          {post.excerpt}
+        </p>
+      ) : null}
 
-function ExternalLinkBadge({
-  children,
-  tone = "light",
-}: {
-  children: ReactNode;
-  tone?: string;
-}) {
-  return (
-    <span className={`external-badge ${tone}`}>
-      <span>{children}</span>
-      <ArrowRightIcon />
-    </span>
-  );
-}
-
-function ConsultAction({
-  channel,
-}: {
-  channel: { key: string; label: string; href: string; tone: string };
-}) {
-  const isReady = channel.href && channel.href !== "#";
-
-  if (!isReady) {
-    return (
-      <button
-        type="button"
-        className={`consultButton ${channel.tone} disabled`}
-        disabled
-        aria-disabled="true"
+      <SmartLink
+        href={href}
+        className="inline-flex items-center text-sm font-semibold text-neutral-900 hover:text-neutral-600"
       >
-        <ExternalLinkBadge tone={channel.tone}>{channel.label}</ExternalLinkBadge>
-      </button>
-    );
-  }
-
-  return (
-    <a
-      href={channel.href}
-      target="_blank"
-      rel="noreferrer"
-      className={`consultButton ${channel.tone}`}
-      aria-label={`${channel.label} 새 창으로 열기`}
-    >
-      <ExternalLinkBadge tone={channel.tone}>{channel.label}</ExternalLinkBadge>
-    </a>
+        자세히 보기 →
+      </SmartLink>
+    </article>
   );
 }
 
-export default async function Page() {
-  const POSTS = await getPosts();
+export default async function HomePage() {
+  const posts = await getPosts();
+
+  const featuredPost = posts.find((post) => post.featured) ?? posts[0] ?? null;
+  const libraryPosts = featuredPost
+    ? posts.filter((post) => post.id !== featuredPost.id)
+    : posts;
 
   return (
-    <main className="page">
-      <div className="container">
-        <header className="hero">
-          <div className="brandShell">
-            <div className="sunWrap">
-              <SunLogo />
+    <main className="mx-auto w-full max-w-6xl px-4 py-12 md:px-6 md:py-16">
+      <section className="mb-14">
+        <div className="mb-6">
+          <p className="mb-2 text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">
+            DASANGDAM
+          </p>
+          <h1 className="text-4xl font-bold tracking-tight text-neutral-950 md:text-5xl">
+            마음을 돌보는 글과 상담
+          </h1>
+          <p className="mt-4 max-w-2xl text-base leading-7 text-neutral-600 md:text-lg">
+            다상담의 Notion 글을 홈페이지와 상세 페이지에 연동한 서재입니다.
+            운영 도메인 기준 내부 라우팅은 모두 dasangdam.com 에 맞게
+            동작합니다.
+          </p>
+        </div>
+      </section>
+
+      <section className="mb-16">
+        <div className="mb-5 flex items-end justify-between gap-4">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">
+              TODAY&apos;S PICK
+            </p>
+            <h2 className="mt-1 text-2xl font-bold text-neutral-950">
+              마음을 깨우는 문장
+            </h2>
+          </div>
+        </div>
+
+        {featuredPost ? (
+          <article className="rounded-3xl border border-neutral-200 bg-neutral-50 p-8 md:p-10">
+            <div className="mb-4 flex flex-wrap items-center gap-2 text-sm text-neutral-500">
+              {featuredPost.category ? (
+                <span className="rounded-full bg-white px-3 py-1 text-xs font-medium text-neutral-700">
+                  {featuredPost.category}
+                </span>
+              ) : null}
+              {featuredPost.date ? <span>{formatDate(featuredPost.date)}</span> : null}
             </div>
 
-            <div className="brandText">
-              <p className="brandEyebrow">WISE REST WITH SUNNY</p>
-              <h1>{BRAND.title}</h1>
-              <p className="brandSubtitle">{BRAND.subtitle}</p>
-            </div>
-          </div>
-        </header>
-
-        <section className="recommendSection">
-          {FEATURED_CONSULTS.map((item) => (
-            <Link key={item.id} href={item.href} className="recommendCard">
-              <div className="recommendHead">
-                <span className="sectionBadge warm">{item.badge}</span>
-              </div>
-
-              <div className="recommendBody">
-                <div>
-                  <h2>{item.title}</h2>
-                  <p>{item.description}</p>
-                </div>
-
-                <div className="recommendCTA">
-                  <span>{item.cta}</span>
-                  <ArrowRightIcon />
-                </div>
-              </div>
-            </Link>
-          ))}
-        </section>
-
-        <section className="section">
-          <div className="sectionTitle">
-            <span className="sectionBadge">PLAYGROUND</span>
-            <h2>지금 나에게 필요한 게 뭘까요?</h2>
-          </div>
-
-          <div className="serviceGrid">
-            {SERVICES.map((service) => (
+            <h3 className="mb-4 text-3xl font-bold tracking-tight text-neutral-950 md:text-4xl">
               <SmartLink
-                key={service.key}
-                href={service.href}
-                className="serviceCard"
-                ariaLabel={`${service.name} 페이지로 이동`}
+                href={getPostHref(featuredPost)}
+                className="hover:text-neutral-700"
               >
-                <div
-                  className="serviceIcon"
-                  style={{ backgroundColor: service.iconBg }}
-                >
-                  <ServiceIcon type={service.key} stroke={service.iconStroke} />
-                </div>
-
-                <div className="serviceText">
-                  <strong>{service.name}</strong>
-                  <p>{service.description}</p>
-                </div>
-
-                <div className="cardArrow">
-                  <ArrowRightIcon />
-                </div>
+                {featuredPost.title}
               </SmartLink>
+            </h3>
+
+            {featuredPost.excerpt ? (
+              <p className="mb-6 max-w-3xl text-base leading-7 text-neutral-700 md:text-lg">
+                {featuredPost.excerpt}
+              </p>
+            ) : null}
+
+            <SmartLink
+              href={getPostHref(featuredPost)}
+              className="inline-flex items-center rounded-full bg-neutral-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-neutral-700"
+            >
+              글 읽으러 가기
+            </SmartLink>
+          </article>
+        ) : (
+          <div className="rounded-2xl border border-dashed border-neutral-300 bg-neutral-50 px-6 py-10 text-neutral-500">
+            아직 추천 글이 없습니다.
+          </div>
+        )}
+      </section>
+
+      <section>
+        <div className="mb-6">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">
+            LIBRARY
+          </p>
+          <h2 className="mt-1 text-2xl font-bold text-neutral-950">
+            다상담 서재
+          </h2>
+        </div>
+
+        {libraryPosts.length > 0 ? (
+          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {libraryPosts.map((post) => (
+              <PostCard key={post.id} post={post} />
             ))}
           </div>
-        </section>
-
-        <section className="section">
-          <div className="sectionTitle">
-            <h2>다상담 서재</h2>
+        ) : (
+          <div className="rounded-2xl border border-dashed border-neutral-300 bg-white px-6 py-10 text-neutral-500">
+            서재에 표시할 다른 글이 아직 없습니다.
           </div>
-
-          <div className="postList">
-            {POSTS.length > 0 ? (
-              POSTS.map((post) => (
-                <Link key={post.id} href={post.href} className="postRow">
-                  <div className="postMain">
-                    <div className="postMeta">
-                      <span className="categoryTag">{post.category}</span>
-                      <span className="postDate">{post.date}</span>
-                    </div>
-                    <h3>{post.title}</h3>
-                  </div>
-
-                  <div className="postArrow">
-                    <ArrowRightIcon />
-                  </div>
-                </Link>
-              ))
-            ) : (
-              <div className="postRow" aria-live="polite">
-                <div className="postMain">
-                  <div className="postMeta">
-                    <span className="categoryTag">안내</span>
-                  </div>
-                  <h3>아직 공개된 글이 없습니다.</h3>
-                </div>
-              </div>
-            )}
-          </div>
-
-          <div className="consultBanner" id="consult">
-            <div className="consultText">
-              <span className="sectionBadge warm">CONSULT</span>
-              <h3>1:1 상담 예약</h3>
-              <p>
-                현재 상담 채널은 오픈 준비중입니다. 오픈 전까지는 메인 화면에서
-                서비스와 글을 먼저 둘러보실 수 있어요.
-              </p>
-            </div>
-
-            <div className="consultButtons">
-              {CONSULT_CHANNELS.map((channel) => (
-                <ConsultAction key={channel.key} channel={channel} />
-              ))}
-            </div>
-          </div>
-        </section>
-      </div>
+        )}
+      </section>
     </main>
   );
 }
