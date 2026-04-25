@@ -383,7 +383,7 @@ export default function Page() {
         <section className="section">
           <div className="sectionTitle">
             <span className="sectionBadge">BLOG & CONSULT</span>
-            <h2>최근 글과 상담 안내</h2>
+            <h2>다상담 서재</h2>
             
           </div>
 
