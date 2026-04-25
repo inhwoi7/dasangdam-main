@@ -12,4 +12,4 @@ export type Post = {
 const notionApiKey = process.env.NOTION_API_KEY;
 const databaseId = process.env.NOTION_DATABASE_ID;
 
-const notion = notionApiKey ? new Client({ auth: notionApiKey })
+const notion = notionApiKey ? new Client({ auth: notionApiKey }) : null;
