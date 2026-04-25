@@ -425,30 +425,6 @@ export default function Page() {
         </section>
       </div>
 
-      {ACTIVE_CONSULT_CHANNEL ? (
-        <a
-          href={ACTIVE_CONSULT_CHANNEL.href}
-          target="_blank"
-          rel="noreferrer"
-          className="floatingConsult"
-          aria-label="1:1 상담 예약 바로가기"
-        >
-          <span className="floatingText">1:1 상담 예약</span>
-          <span className="floatingIcon">
-            <ArrowRightIcon />
-          </span>
-        </a>
-      ) : (
-        <div
-          className="floatingConsult disabled"
-          aria-label="1:1 상담 오픈 준비중"
-        >
-          <span className="floatingText">1:1 상담 오픈 준비중</span>
-          <span className="floatingIcon">
-            <ArrowRightIcon />
-          </span>
-        </div>
-      )}
     </main>
   );
 }
