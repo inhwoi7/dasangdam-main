@@ -22,7 +22,17 @@ const CONSULT_CHANNELS = [
   },
 ];
 
-const FEATURED_CONSULTS = [
+type FeaturedConsult = {
+  id: string;
+  badge: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  href: string;
+  cta: string;
+};
+
+const FEATURED_CONSULTS: FeaturedConsult[] = [
   {
     id: "today-recommend",
     badge: "TODAY'S PICK",
@@ -30,6 +40,8 @@ const FEATURED_CONSULTS = [
     subtitle: "오늘 하루를 지탱하는 글",
     description:
       "요즘 마음이 복잡하고 방향이 흐릿하게 느껴진다면, 좋을 글과 함께해보세요.",
+    href: "/blog/comforting-myself-in-spring",
+    cta: "글 보러가기",
   },
 ];
 
@@ -126,10 +138,6 @@ const BRAND = {
   title: "다상담",
   subtitle: "써니와 함께하는 인생의 지혜로운 쉼터",
 };
-
-const ACTIVE_CONSULT_CHANNEL = CONSULT_CHANNELS.find(
-  (item) => item.href && item.href !== "#"
-);
 
 function SunLogo() {
   return (
