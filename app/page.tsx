@@ -350,10 +350,7 @@ export default function Page() {
           <div className="sectionTitle">
             <span className="sectionBadge">PLAYGROUND</span>
             <h2>필요한 상담 도구를 바로 선택하세요</h2>
-            <p>
-              자주 찾는 서비스는 큼직한 카드 형태로 배치해, 한눈에 보고 바로
-              이동할 수 있게 구성했습니다.
-            </p>
+            
           </div>
 
           <div className="serviceGrid">
@@ -388,10 +385,7 @@ export default function Page() {
           <div className="sectionTitle">
             <span className="sectionBadge">BLOG & CONSULT</span>
             <h2>최근 글과 상담 안내</h2>
-            <p>
-              블로그는 제목과 날짜를 깔끔하게 정리하고, 상담 예약은 하단에서
-              바로 이어질 수 있도록 강조했습니다.
-            </p>
+            
           </div>
 
           <div className="postList">
