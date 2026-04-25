@@ -63,7 +63,7 @@ const SERVICES = [
     key: "ipip", // 성격검사 추가
     name: "IPIP-50 성격검사",
     description: "과학적인 5대 성격 요인을 정밀하게 측정합니다.",
-    href: "ipip50-rho.vercel.app", 
+    href: "https://ipip50-rho.vercel.app", 
     iconBg: "#EAFBF0",
     iconStroke: "#16A34A",
   },
