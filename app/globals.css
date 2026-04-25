@@ -1,0 +1,618 @@
+:root {
+  --bg: #f7f3eb;
+  --surface: #fffdf9;
+  --surface-strong: #ffffff;
+  --text: #1f1f1f;
+  --muted: #6f6a62;
+  --line: #e8decd;
+  --shadow: 0 12px 34px rgba(68, 52, 24, 0.08);
+  --shadow-hover: 0 16px 42px rgba(68, 52, 24, 0.12);
+  --primary: #f6a500;
+  --primary-soft: #fff1cc;
+  --dark: #202020;
+  --radius-xxl: 30px;
+  --radius-xl: 26px;
+  --radius-lg: 22px;
+  --radius-md: 18px;
+  --container: 1120px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(
+      circle at top,
+      rgba(255, 239, 198, 0.72),
+      transparent 24%
+    ),
+    var(--bg);
+  color: var(--text);
+  font-family: "Pretendard", "Noto Sans KR", -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Segoe UI", sans-serif;
+  line-height: 1.65;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+}
+
+.page {
+  min-height: 100vh;
+  padding: 28px 18px 130px;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+}
+
+.hero {
+  padding-top: 8px;
+}
+
+.brandShell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 26px 28px;
+  background: rgba(255, 253, 249, 0.94);
+  border: 1px solid rgba(232, 222, 205, 0.95);
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.sunWrap {
+  width: 74px;
+  height: 74px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #fff9e6 0%, #ffe7ad 100%);
+  flex-shrink: 0;
+}
+
+.sunWrap svg {
+  width: 40px;
+  height: 40px;
+  display: block;
+}
+
+.brandText {
+  min-width: 0;
+}
+
+.brandEyebrow {
+  margin: 0 0 6px;
+  font-size: 0.84rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: #9a7a28;
+}
+
+.brandText h1 {
+  margin: 0;
+  font-size: clamp(2.1rem, 4.6vw, 3rem);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+.brandSubtitle {
+  margin: 10px 0 0;
+  font-size: 1.12rem;
+  color: var(--muted);
+}
+
+.recommendSection {
+  margin-top: 24px;
+}
+
+.recommendCard {
+  display: block;
+  background: linear-gradient(135deg, #fff7e2 0%, #ffefc7 100%);
+  border: 1px solid #efd18c;
+  border-radius: var(--radius-xxl);
+  padding: 24px;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.recommendCard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.recommendHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.recommendMini {
+  color: #7f6731;
+  font-weight: 700;
+  font-size: 0.97rem;
+}
+
+.recommendBody {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.recommendBody h2 {
+  margin: 0 0 8px;
+  font-size: clamp(1.55rem, 3vw, 2rem);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.recommendBody p {
+  margin: 0;
+  color: #6d5a2e;
+  font-size: 1.04rem;
+  max-width: 760px;
+}
+
+.recommendCTA {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  color: #3b2f15;
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.recommendCTA svg {
+  width: 18px;
+  height: 18px;
+}
+
+.section {
+  margin-top: 28px;
+}
+
+.sectionTitle {
+  padding: 6px 4px 18px;
+}
+
+.sectionTitle h2 {
+  margin: 0 0 8px;
+  font-size: clamp(1.65rem, 3.2vw, 2.2rem);
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+}
+
+.sectionTitle p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.04rem;
+}
+
+.sectionBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #f3efe6;
+  color: #7a6952;
+  font-size: 0.84rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.sectionBadge.warm {
+  background: var(--primary-soft);
+  color: #8a6715;
+}
+
+.serviceGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.serviceCard {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 124px;
+  padding: 22px 20px;
+  background: var(--surface-strong);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow);
+  transition: transform 0.18s ease, box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.serviceCard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+  border-color: #dccbb1;
+}
+
+.serviceIcon {
+  width: 68px;
+  height: 68px;
+  border-radius: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.serviceIcon svg {
+  width: 34px;
+  height: 34px;
+  display: block;
+}
+
+.serviceText {
+  flex: 1;
+  min-width: 0;
+}
+
+.serviceText strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 1.22rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.serviceText p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.58;
+  word-break: keep-all;
+}
+
+.cardArrow {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  background: #f6f1e8;
+  color: #8c7f6d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cardArrow svg,
+.postArrow svg,
+.floatingIcon svg,
+.external-badge svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+.postList {
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow);
+}
+
+.postRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 22px 24px;
+  border-bottom: 1px solid var(--line);
+  transition: background-color 0.18s ease;
+}
+
+.postRow:last-child {
+  border-bottom: none;
+}
+
+.postRow:hover {
+  background: #fffcf6;
+}
+
+.postMain {
+  min-width: 0;
+  flex: 1;
+}
+
+.postMeta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.categoryTag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #f7f0df;
+  color: #856a2a;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.postDate {
+  color: var(--muted);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.postMain h3 {
+  margin: 0;
+  font-size: 1.18rem;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  word-break: keep-all;
+}
+
+.postArrow {
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f6f1e8;
+  color: #8c7f6d;
+  flex-shrink: 0;
+}
+
+.consultBanner {
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 24px;
+  border-radius: 28px;
+  background: linear-gradient(135deg, #fff4d4 0%, #ffe4aa 100%);
+  border: 1px solid #efcf84;
+  box-shadow: var(--shadow);
+}
+
+.consultText {
+  min-width: 0;
+  flex: 1;
+}
+
+.consultText h3 {
+  margin: 0 0 6px;
+  font-size: 1.62rem;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+
+.consultText p {
+  margin: 0;
+  color: #6c5728;
+  font-size: 1.03rem;
+}
+
+.consultButtons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.consultButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  padding: 0 18px;
+  border-radius: 999px;
+  font-weight: 800;
+  border: none;
+  transition: transform 0.18s ease, opacity 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.consultButton:hover {
+  transform: translateY(-1px);
+  opacity: 0.96;
+}
+
+.consultButton.dark {
+  background: #1f1f1f;
+  color: #ffffff;
+  box-shadow: 0 10px 24px rgba(31, 31, 31, 0.16);
+}
+
+.consultButton.light {
+  background: rgba(255, 255, 255, 0.85);
+  color: #1f1f1f;
+  border: 1px solid rgba(133, 106, 42, 0.16);
+}
+
+.consultButton.disabled,
+.floatingConsult.disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+  transform: none;
+}
+
+.external-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.external-badge.dark {
+  color: #ffffff;
+}
+
+.external-badge.light {
+  color: #1f1f1f;
+}
+
+.floatingConsult {
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  z-index: 50;
+  width: min(720px, calc(100% - 20px));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 22px;
+  border-radius: 999px;
+  background: #1f1f1f;
+  color: #ffffff;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.24);
+}
+
+.floatingText {
+  font-size: 1.08rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.floatingIcon {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 980px) {
+  .serviceGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .recommendBody,
+  .consultBanner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .consultButtons {
+    width: 100%;
+  }
+
+  .consultButton {
+    flex: 1 1 220px;
+  }
+}
+
+@media (max-width: 720px) {
+  .page {
+    padding: 18px 14px 120px;
+  }
+
+  .brandShell {
+    flex-direction: column;
+    border-radius: 28px;
+    padding: 22px 18px;
+    gap: 14px;
+  }
+
+  .sunWrap {
+    width: 66px;
+    height: 66px;
+  }
+
+  .brandSubtitle {
+    font-size: 1.03rem;
+  }
+
+  .recommendCard,
+  .consultBanner {
+    padding: 20px;
+  }
+
+  .serviceCard {
+    min-height: 116px;
+    padding: 18px;
+  }
+
+  .serviceIcon {
+    width: 62px;
+    height: 62px;
+    border-radius: 18px;
+  }
+
+  .serviceText strong {
+    font-size: 1.14rem;
+  }
+
+  .serviceText p,
+  .sectionTitle p,
+  .consultText p {
+    font-size: 0.98rem;
+  }
+
+  .postRow {
+    padding: 18px;
+  }
+
+  .postMain h3 {
+    font-size: 1.08rem;
+  }
+
+  .floatingConsult {
+    width: calc(100% - 16px);
+    bottom: 12px;
+    padding: 16px 18px;
+  }
+
+  .floatingText {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .recommendHead {
+    align-items: flex-start;
+  }
+
+  .consultButtons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .consultButton {
+    width: 100%;
+  }
+}
