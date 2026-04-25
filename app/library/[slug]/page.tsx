@@ -343,12 +343,8 @@ export default async function LibraryPostPage({ params }: PageProps) {
     notFound();
   }
 
-  const contentHtml =
-    typeof post.contentHtml === "string"
-      ? post.contentHtml
-      : typeof post.html === "string"
-      ? post.html
-      : null;
+ const contentHtml =
+  typeof post.contentHtml === "string" ? post.contentHtml : null;
 
   const blocks = Array.isArray(post.blocks)
     ? post.blocks
