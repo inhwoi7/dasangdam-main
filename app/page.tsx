@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getPosts } from "@/lib/posts";
 
 export const metadata = {
   title: "다상담 | 써니와 함께하는 인생의 지혜로운 쉼터",
@@ -82,44 +83,6 @@ const SERVICES = [
     href: "/services/today-fortune",
     iconBg: "#FFF7E8",
     iconStroke: "#EA580C",
-  },
-];
-
-const POSTS = [
-  {
-    id: 1,
-    category: "마음돌봄",
-    title: "봄철 마음이 지칠 때, 나를 다독이는 가장 쉬운 방법",
-    date: "2026.04.24",
-    href: "/blog/comforting-myself-in-spring",
-  },
-  {
-    id: 2,
-    category: "사주이야기",
-    title: "사주를 너무 어렵게 보지 않아도 되는 이유",
-    date: "2026.04.18",
-    href: "/blog/why-saju-can-be-simple",
-  },
-  {
-    id: 3,
-    category: "관계이해",
-    title: "관계가 답답할 때 MBTI를 활용하는 현실적인 팁",
-    date: "2026.04.12",
-    href: "/blog/mbti-for-relationships",
-  },
-  {
-    id: 4,
-    category: "주역점",
-    title: "주역점은 결국 무엇을 알려주는가",
-    date: "2026.04.05",
-    href: "/blog/what-iching-really-tells-you",
-  },
-  {
-    id: 5,
-    category: "상담가이드",
-    title: "처음 상담을 신청할 때 부담을 줄이는 방법",
-    date: "2026.03.29",
-    href: "/blog/how-to-start-consulting-comfortably",
   },
 ];
 
@@ -306,6 +269,8 @@ function ConsultAction({
 }
 
 export default function Page() {
+  const POSTS = await getPosts();
+  
   return (
     <main className="page">
       <div className="container">
