@@ -348,7 +348,7 @@ export default function Page() {
         <section className="section">
           <div className="sectionTitle">
             <span className="sectionBadge">PLAYGROUND</span>
-            <h2>필요한 상담 도구를 바로 선택하세요</h2>
+            <h2>지금 나에게 필요한 게 뭘까요?</h2>
             
           </div>
 
