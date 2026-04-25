@@ -70,7 +70,7 @@ const SERVICES = [
   {
     key: "number",
     name: "행운의 숫자",
-    description: "가벼운 마음으로 확인하는 행운의 숫자를 확인해보세요.",
+    description: "가벼운 마음으로 행운의 숫자를 확인해보세요.",
     href: "/services/lucky-number",
     iconBg: "#FFF0F3",
     iconStroke: "#E11D48",
