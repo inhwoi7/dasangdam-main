@@ -53,7 +53,7 @@ const SERVICES = [
   },
   {
     key: "chemi", // 궁합 앱 추가
-    name: "연인 궁합",
+    name: "사주 궁합",
     description: "우리 둘의 성향 차이와 조화를 확인해보세요.",
     href: "https://dasangdam-chemi-app.vercel.app", 
     iconBg: "#FFF0F3",
@@ -70,7 +70,7 @@ const SERVICES = [
   {
     key: "lotto",
     name: "로또",
-    description: "가벼운 마음으로 확인하는 행운의 번호",
+    description: "가벼운 마음으로 확인하는 행운의 번호를 확인해보세요.",
     href: "/services/lotto",
     iconBg: "#FFF0F3",
     iconStroke: "#E11D48",
