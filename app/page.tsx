@@ -381,8 +381,7 @@ export default function Page() {
         </section>
 
         <section className="section">
-          <div className="sectionTitle">
-            <span className="sectionBadge">BLOG & CONSULT</span>
+          <div className="sectionTitle">    
             <h2>다상담 서재</h2>
             
           </div>
