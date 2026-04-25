@@ -1,7 +1,10 @@
+// app/page.tsx
 import Link from "next/link";
+import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { getPosts } from "@/lib/posts";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "다상담 | 써니와 함께하는 인생의 지혜로운 쉼터",
   description:
     "사주, MBTI, 로또, 주역점, 블로그, 1:1 상담 예약까지 한눈에 보는 다상담 메인 페이지",
@@ -26,10 +29,8 @@ const FEATURED_CONSULTS = [
   {
     id: "today-recommend",
     badge: "TODAY'S PICK",
-    subtitle: "오늘의 추천",
     title: "마음을 깨우는 문장",
-    description:
-      "위대한 사상가들이 건네는 오늘의 위로를 만나보세요.",
+    description: "위대한 사상가들이 건네는 오늘의 위로를 만나보세요.",
     href: "/consult/recommended",
     cta: "자세히 보기",
   },
@@ -40,7 +41,7 @@ const SERVICES = [
     key: "saju",
     name: "사주",
     description: "타고난 흐름과 현재의 운을 편안하게 살펴보세요.",
-    href: "https://my-saju-app.vercel.app", 
+    href: "https://my-saju-app.vercel.app",
     iconBg: "#FFF2CC",
     iconStroke: "#D89B00",
   },
@@ -53,18 +54,18 @@ const SERVICES = [
     iconStroke: "#3C82F6",
   },
   {
-    key: "chemi", // 궁합 앱 추가
+    key: "chemi",
     name: "사주 궁합",
     description: "우리 둘의 성향 차이와 조화를 확인해보세요.",
-    href: "https://dasangdam-chemi-app.vercel.app", 
+    href: "https://dasangdam-chemi-app.vercel.app",
     iconBg: "#FFF0F3",
     iconStroke: "#E11D48",
   },
   {
-    key: "ipip", // 성격검사 추가
+    key: "ipip",
     name: "IPIP-50 성격검사",
     description: "과학적인 5대 성격 요인을 정밀하게 측정합니다.",
-    href: "https://ipip50-rho.vercel.app/", 
+    href: "https://ipip50-rho.vercel.app/",
     iconBg: "#EAFBF0",
     iconStroke: "#16A34A",
   },
@@ -91,9 +92,41 @@ const BRAND = {
   subtitle: "써니와 함께하는 인생의 지혜로운 쉼터",
 };
 
-const ACTIVE_CONSULT_CHANNEL = CONSULT_CHANNELS.find(
-  (item) => item.href && item.href !== "#"
-);
+function isExternalHref(href: string) {
+  return /^https?:\/\//i.test(href);
+}
+
+function SmartLink({
+  href,
+  className,
+  ariaLabel,
+  children,
+}: {
+  href: string;
+  className?: string;
+  ariaLabel?: string;
+  children: ReactNode;
+}) {
+  if (isExternalHref(href)) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noreferrer"
+        className={className}
+        aria-label={ariaLabel}
+      >
+        {children}
+      </a>
+    );
+  }
+
+  return (
+    <Link href={href} className={className} aria-label={ariaLabel}>
+      {children}
+    </Link>
+  );
+}
 
 function SunLogo() {
   return (
@@ -153,49 +186,37 @@ function ServiceIcon({
     case "mbti":
       return (
         <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
-          <rect x="10" y="10" width="12" height="12" rx="3" stroke={stroke} strokeWidth="2.5" />
-          <rect x="26" y="10" width="12" height="12" rx="3" stroke={stroke} strokeWidth="2.5" />
-          <rect x="10" y="26" width="12" height="12" rx="3" stroke={stroke} strokeWidth="2.5" />
+          <rect
+            x="10"
+            y="10"
+            width="12"
+            height="12"
+            rx="3"
+            stroke={stroke}
+            strokeWidth="2.5"
+          />
+          <rect
+            x="26"
+            y="10"
+            width="12"
+            height="12"
+            rx="3"
+            stroke={stroke}
+            strokeWidth="2.5"
+          />
+          <rect
+            x="10"
+            y="26"
+            width="12"
+            height="12"
+            rx="3"
+            stroke={stroke}
+            strokeWidth="2.5"
+          />
           <path
             d="M30 26H34C36.2 26 38 27.8 38 30V34C38 36.2 36.2 38 34 38H30C27.8 38 26 36.2 26 34V30C26 27.8 27.8 26 30 26Z"
             stroke={stroke}
             strokeWidth="2.5"
-          />
-        </svg>
-      );
-    case "lotto":
-      return (
-        <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
-          <circle cx="17" cy="17" r="6" stroke={stroke} strokeWidth="2.5" />
-          <circle cx="31" cy="17" r="6" stroke={stroke} strokeWidth="2.5" />
-          <circle cx="24" cy="30" r="6" stroke={stroke} strokeWidth="2.5" />
-          <path
-            d="M17 11V23M11 17H23M31 11V23M25 17H37M24 24V36M18 30H30"
-            stroke={stroke}
-            strokeWidth="2"
-            strokeLinecap="round"
-          />
-        </svg>
-      );
-    case "iching":
-      return (
-        <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
-          <path d="M12 14H36" stroke={stroke} strokeWidth="3" strokeLinecap="round" />
-          <path d="M12 22H20M28 22H36" stroke={stroke} strokeWidth="3" strokeLinecap="round" />
-          <path d="M12 30H36" stroke={stroke} strokeWidth="3" strokeLinecap="round" />
-          <path d="M12 38H20M28 38H36" stroke={stroke} strokeWidth="3" strokeLinecap="round" />
-        </svg>
-      );
-    case "tarot":
-      return (
-        <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
-          <rect x="13" y="9" width="22" height="30" rx="4" stroke={stroke} strokeWidth="2.5" />
-          <circle cx="24" cy="24" r="5" stroke={stroke} strokeWidth="2.5" />
-          <path
-            d="M24 15V17M24 31V33M15 24H17M31 24H33"
-            stroke={stroke}
-            strokeWidth="2"
-            strokeLinecap="round"
           />
         </svg>
       );
@@ -208,6 +229,51 @@ function ServiceIcon({
             stroke={stroke}
             strokeWidth="2.3"
             strokeLinecap="round"
+          />
+        </svg>
+      );
+    case "chemi":
+      return (
+        <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+          <path
+            d="M17.5 14C14 14 11 16.8 11 20.6C11 28 24 35 24 35S37 28 37 20.6C37 16.8 34 14 30.5 14C27.9 14 25.8 15.4 24 17.6C22.2 15.4 20.1 14 17.5 14Z"
+            stroke={stroke}
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      );
+    case "ipip":
+      return (
+        <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+          <rect
+            x="10"
+            y="8"
+            width="28"
+            height="32"
+            rx="4"
+            stroke={stroke}
+            strokeWidth="2.5"
+          />
+          <path
+            d="M17 18H31M17 24H31M17 30H25"
+            stroke={stroke}
+            strokeWidth="2.5"
+            strokeLinecap="round"
+          />
+        </svg>
+      );
+    case "number":
+      return (
+        <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+          <circle cx="24" cy="24" r="14" stroke={stroke} strokeWidth="2.5" />
+          <path
+            d="M20 18L24 14L28 18M24 14V34"
+            stroke={stroke}
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </svg>
       );
@@ -224,7 +290,7 @@ function ExternalLinkBadge({
   children,
   tone = "light",
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   tone?: string;
 }) {
   return (
@@ -292,7 +358,7 @@ export default async function Page() {
           {FEATURED_CONSULTS.map((item) => (
             <Link key={item.id} href={item.href} className="recommendCard">
               <div className="recommendHead">
-               <span className="sectionBadge warm">{item.badge}</span>
+                <span className="sectionBadge warm">{item.badge}</span>
               </div>
 
               <div className="recommendBody">
@@ -314,16 +380,15 @@ export default async function Page() {
           <div className="sectionTitle">
             <span className="sectionBadge">PLAYGROUND</span>
             <h2>지금 나에게 필요한 게 뭘까요?</h2>
-            
           </div>
 
           <div className="serviceGrid">
             {SERVICES.map((service) => (
-              <Link
+              <SmartLink
                 key={service.key}
                 href={service.href}
                 className="serviceCard"
-                aria-label={`${service.name} 페이지로 이동`}
+                ariaLabel={`${service.name} 페이지로 이동`}
               >
                 <div
                   className="serviceIcon"
@@ -340,33 +405,43 @@ export default async function Page() {
                 <div className="cardArrow">
                   <ArrowRightIcon />
                 </div>
-              </Link>
+              </SmartLink>
             ))}
           </div>
         </section>
 
         <section className="section">
-          <div className="sectionTitle">    
+          <div className="sectionTitle">
             <h2>다상담 서재</h2>
-            
           </div>
 
           <div className="postList">
-            {POSTS.map((post) => (
-              <Link key={post.id} href={post.href} className="postRow">
+            {POSTS.length > 0 ? (
+              POSTS.map((post) => (
+                <Link key={post.id} href={post.href} className="postRow">
+                  <div className="postMain">
+                    <div className="postMeta">
+                      <span className="categoryTag">{post.category}</span>
+                      <span className="postDate">{post.date}</span>
+                    </div>
+                    <h3>{post.title}</h3>
+                  </div>
+
+                  <div className="postArrow">
+                    <ArrowRightIcon />
+                  </div>
+                </Link>
+              ))
+            ) : (
+              <div className="postRow" aria-live="polite">
                 <div className="postMain">
                   <div className="postMeta">
-                    <span className="categoryTag">{post.category}</span>
-                    <span className="postDate">{post.date}</span>
+                    <span className="categoryTag">안내</span>
                   </div>
-                  <h3>{post.title}</h3>
+                  <h3>아직 공개된 글이 없습니다.</h3>
                 </div>
-
-                <div className="postArrow">
-                  <ArrowRightIcon />
-                </div>
-              </Link>
-            ))}
+              </div>
+            )}
           </div>
 
           <div className="consultBanner" id="consult">
@@ -387,7 +462,6 @@ export default async function Page() {
           </div>
         </section>
       </div>
-
     </main>
   );
 }

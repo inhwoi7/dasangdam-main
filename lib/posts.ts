@@ -1,26 +1,15 @@
-import { notion, databaseId } from "./notion";
+// lib/posts.ts
+import { Client } from "@notionhq/client";
 
-export async function getPosts() {
-  const response = await notion.databases.query({
-    database_id: databaseId,
-    filter: {
-      property: "published",
-      checkbox: { equals: true },
-    },
-    sorts: [
-      {
-        property: "date",
-        direction: "descending",
-      },
-    ],
-  });
+export type Post = {
+  id: string;
+  title: string;
+  category: string;
+  date: string;
+  href: string;
+};
 
-  return response.results.map((page: any) => ({
-    id: page.id,
-    title: page.properties.Name.title[0]?.plain_text ?? "",
-    slug: page.properties.slug.rich_text[0]?.plain_text ?? "",
-    category: page.properties.category.select?.name ?? "",
-    date: page.properties.date.date?.start ?? "",
-    href: `/blog/${page.properties.slug.rich_text[0]?.plain_text ?? ""}`,
-  }));
-}
+const notionApiKey = process.env.NOTION_API_KEY;
+const databaseId = process.env.NOTION_DATABASE_ID;
+
+const notion = notionApiKey ? new Client({ auth: notionApiKey })
