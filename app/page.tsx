@@ -26,12 +26,10 @@ const FEATURED_CONSULTS = [
   {
     id: "today-recommend",
     badge: "TODAY'S PICK",
-    title: "오늘의 추천 상담",
-    subtitle: "지금 가장 많이 찾는 고민 주제",
+    title: "마음을 깨우는 문장",
+    subtitle: "오늘 하루를 지탱하는 글",
     description:
-      "요즘 마음이 복잡하고 방향이 흐릿하게 느껴진다면, 가볍게 시작할 수 있는 오늘의 상담 추천을 확인해보세요.",
-    href: "/consult/recommended",
-    cta: "추천 상담 보기",
+      "요즘 마음이 복잡하고 방향이 흐릿하게 느껴진다면, 좋을 글과 함께해보세요.",
   },
 ];
 
@@ -69,9 +67,9 @@ const SERVICES = [
     iconStroke: "#16A34A",
   },
   {
-    key: "lotto",
-    name: "로또",
-    description: "가벼운 마음으로 확인하는 행운의 번호를 확인해보세요.",
+    key: "lucky-number",
+    name: "행운의 숫자",
+    description: "가벼운 마음으로 확인하는 행운의 숫자를 확인해보세요.",
     href: "/services/lotto",
     iconBg: "#FFF0F3",
     iconStroke: "#E11D48",
@@ -374,7 +372,7 @@ export default function Page() {
         <section className="section">
           <div className="sectionTitle">
             <span className="sectionBadge">PLAYGROUND</span>
-            <h2>필요한 상담 도구를 바로 선택하세요</h2>
+            <h2>지금 나에게 필요한 게 뭘까요?</h2>
           </div>
 
           <div className="serviceGrid">
@@ -408,7 +406,7 @@ export default function Page() {
         <section className="section">
           <div className="sectionTitle">
             <span className="sectionBadge">BLOG & CONSULT</span>
-            <h2>최근 글과 상담 안내</h2>
+            <h2>다상담 서재</h2>
           </div>
 
           <div className="postList">
