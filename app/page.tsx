@@ -25,12 +25,11 @@ const FEATURED_CONSULTS = [
   {
     id: "today-recommend",
     badge: "TODAY'S PICK",
-    title: "오늘의 추천 상담",
-    subtitle: "지금 가장 많이 찾는 고민 주제",
+    title: "마음을 깨우는 문장",  
     description:
-      "요즘 마음이 복잡하고 방향이 흐릿하게 느껴진다면, 가볍게 시작할 수 있는 오늘의 상담 추천을 확인해보세요.",
+      "위대한 사상가들이 건네는 오늘의 위로를 만나보세요.",
     href: "/consult/recommended",
-    cta: "추천 상담 보기",
+    cta: "자세히 보기",
   },
 ];
 
