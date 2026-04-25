@@ -303,7 +303,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const title = post.title ?? "다상담 글";
   const description = post.excerpt ?? post.summary ?? "다상담 글 상세 페이지";
-  const rawCover = post.coverImage ?? post.cover ?? post.thumbnail ?? null;
+  const rawCover = post.coverImage ?? null;
   const ogImage =
     rawCover && /^https?:\/\//i.test(rawCover) ? rawCover : absUrl(rawCover || "/opengraph-image.png");
 
@@ -356,7 +356,7 @@ export default async function LibraryPostPage({ params }: PageProps) {
     ? post.content
     : [];
 
-  const coverImage = post.coverImage ?? post.cover ?? post.thumbnail ?? null;
+  const coverImage = post.coverImage ?? null;
 
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-12 md:px-6 md:py-16">
