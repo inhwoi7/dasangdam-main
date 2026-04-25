@@ -25,7 +25,8 @@ const FEATURED_CONSULTS = [
   {
     id: "today-recommend",
     badge: "TODAY'S PICK",
-    title: "마음을 깨우는 문장",  
+    subtitle: "오늘의 추천",
+    title: "마음을 깨우는 문장",
     description:
       "위대한 사상가들이 건네는 오늘의 위로를 만나보세요.",
     href: "/consult/recommended",
@@ -326,8 +327,7 @@ export default function Page() {
           {FEATURED_CONSULTS.map((item) => (
             <Link key={item.id} href={item.href} className="recommendCard">
               <div className="recommendHead">
-                <span className="sectionBadge warm">{item.badge}</span>
-                <span className="recommendMini">{item.subtitle}</span>
+               <span className="sectionBadge warm">{item.badge}</span>
               </div>
 
               <div className="recommendBody">
