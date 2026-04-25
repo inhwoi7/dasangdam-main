@@ -39,7 +39,7 @@ const SERVICES = [
     key: "saju",
     name: "사주",
     description: "타고난 흐름과 현재의 운을 편안하게 살펴보세요.",
-    href: "https://my-saju-app.vlv5.vercel.app", 
+    href: "https://my-saju-app.vercel.app", 
     iconBg: "#FFF2CC",
     iconStroke: "#D89B00",
   },
