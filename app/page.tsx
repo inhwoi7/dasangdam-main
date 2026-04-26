@@ -55,8 +55,8 @@ const SERVICES = [
     iconStroke: "#D89B00",
   },
   {
-    key: "mbti 관계",
-    name: "MBTI",
+    key: "mbti",
+    name: "MBTI 매칭",
     description: "성향과 관계 패턴을 쉽고 명확하게 이해해보세요.",
     href: "https://dasangdam-mbti-sunny.vercel.app",
     iconBg: "#EAF4FF",
